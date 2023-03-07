@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import "../App.css";
 
 export default function Navbar() {
+  //using useLocation to highlight the nav link when neccessary
+  const location = useLocation();
   return (
     <div>
       <nav className="navbar bg-dark navbar-expand-lg" data-bs-theme="dark">
@@ -25,7 +27,7 @@ export default function Navbar() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-white">
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className= {`nav-link ${location.pathname==="/login"?"active":""}`}
                   aria-current="page"
                   to="/login"
                 >
@@ -33,26 +35,29 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/signup">
+                <Link className= {`nav-link ${location.pathname==="/signup"?"active":""}`} to="/signup">
                   Signup
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">
+                <Link className= {`nav-link ${location.pathname==="/about"?"active":""}`} to="/about">
                   About
                 </Link>
               </li>
             </ul>
-            <form className="d-flex" role="search">
+            <form className="d-flex align-items-center" role="search">
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                style={{
+                  border:"none",
+                  color:"black"
+                }
+                }
               />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
+               <i className="fa-solid fa-magnifying-glass fa-xl" style={{margin: "0 -7vh", color:"black"}}></i>
             </form>
           </div>
         </div>

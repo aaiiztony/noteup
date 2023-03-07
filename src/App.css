@@ -1,8 +1,26 @@
-.text-white{
+*{
+  padding: 0;
+  margin: 0;
+}
+/* gradient motion background */
+body{
+  background: linear-gradient(45deg, rgba(177,56,219,1) 0%, rgba(72,18,198,1) 49%, rgba(0,212,255,1) 100% ) no-repeat;
+  background-size: 400%;
+  animation: aniBg 15s infinite alternate;
+  min-height: 100vh;
   color: white;
 }
 
-body{
-  background-color: #353333;
-  color: white;
+@keyframes aniBg {
+  0%{
+    background-position: left;
+    
+  }
+  100%{
+    background-position: right;
+  }
+  
+}
+i{
+  cursor: pointer;
 }
