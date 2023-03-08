@@ -9,9 +9,9 @@ const Notes = () => {
   //destructuring to obtain notes object from useContext
     const {notes, getNote} = context;
     useEffect(() => {
-      getNote()
-    }, [])
-    
+      getNote();
+    }, // eslint-disable-next-line 
+    [])
   return (
     <div className="container">
     <div className="my-1 text-center">

@@ -2,26 +2,25 @@ import React, { useState } from "react";
 import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
-  const host = "http://localhost:3000"
-  const notesInitial = []
+  const host = "http://localhost:5000";
+  const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
 
 //Fetch the notes from backend
 //check why add note is getting linked properly
   const getNote= async()=>{
-    //API Call
-    const response = await fetch(`${host}/api/notes/fechnotes`, {
+    const response = await fetch(`${host}/api/notes/fetchnotes`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQwMWM0YWFmYjZjZGVlMTBiZGU0MDkxIn0sImlhdCI6MTY3NzkxMDYyNH0.Tf5aA6TNLuivu2cqkwe-QgZ5KV6kPtT1J6bf_gMdSCc"
-      },
+        "Content-Type":"application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQwMWM0YWFmYjZjZGVlMTBiZGU0MDkxIn0sImlhdCI6MTY3NzkxMDYyNH0.Tf5aA6TNLuivu2cqkwe-QgZ5KV6kPtT1J6bf_gMdSCc"
+      }
     });
-    const json = await (response.json());
-    console.log(json)
+    const json = await response.json();
+    setNotes(json);
   }
   
-  //edit notes
+  //add notes
   //API Call
   const addNote= async(id, title, description,tag)=>{
     const response = await fetch(`${host}/api/notes/addnotes`, {
@@ -46,7 +45,7 @@ const NoteState = (props) => {
 }
 
   return (
-    <NoteContext.Provider value={{notes, addNote, deleteNote, getNote}}>
+    <NoteContext.Provider value={{notes, getNote, addNote, deleteNote}}>
     {props.children}
     </NoteContext.Provider>
     )
