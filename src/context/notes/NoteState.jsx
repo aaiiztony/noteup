@@ -7,7 +7,6 @@ const NoteState = (props) => {
   const [notes, setNotes] = useState(notesInitial);
 
 //Fetch the notes from backend
-//check why add note is getting linked properly
   const getNote= async()=>{
     const response = await fetch(`${host}/api/notes/fetchnotes`, {
       method: "GET",
@@ -21,8 +20,8 @@ const NoteState = (props) => {
   }
   
   //add notes
-  //API Call
-  const addNote= async(id, title, description,tag)=>{
+  //API Call - WORK IN PROGRESS
+  const addNote= async( title, description,tag)=>{
     const response = await fetch(`${host}/api/notes/addnotes`, {
       method: "POST",
       headers: {
@@ -31,8 +30,8 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({title, description, tag}), 
     });
-    const json = (response.json());
-    console.log(json)
+    const json = response.json();
+    setNotes(notes.concat(json.title, json.description))
   }
   
   //delete notes
