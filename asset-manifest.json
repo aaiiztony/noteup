@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/noteup/static/css/main.7af3630c.css",
+    "main.js": "/noteup/static/js/main.f5f1fed1.js",
+    "index.html": "/noteup/index.html",
+    "main.7af3630c.css.map": "/noteup/static/css/main.7af3630c.css.map",
+    "main.f5f1fed1.js.map": "/noteup/static/js/main.f5f1fed1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7af3630c.css",
+    "static/js/main.f5f1fed1.js"
+  ]
+}
