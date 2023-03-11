@@ -2,27 +2,22 @@ import React, { useContext, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 
 const AddNotes = () => {
-  const bgColor = {
-    backgroundColor: "#212529",
-    border: "navajowhite",
-    resize: "none"
-  };
   //to use the state at any component, we use context
-  const context = useContext(NoteContext); 
-  const { addNote } = context; //destructuring to get the addNote function
+  const context = useContext(NoteContext);
+  const { addNote, bgColor} = context; //destructuring to get the addNote function
 
   //set the initial value to ""
-  const [note, setNote] = useState({ title: "", description: "", tag: "" });
+  const [note, setNote] = useState({ title: "", description: "", tag: null});
   const handleChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
-  }
+  };
   //using the name and value as pair to populate our client side note
   const handleSubmit = () => {
     addNote(note.title, note.description, note.tag);
-  }
+  };
   return (
     <div className="container my-2">
-      <h3>
+      <h3 className="text-center">
         <strong>Add a note +</strong>
       </h3>
       <div>
@@ -31,7 +26,7 @@ const AddNotes = () => {
             <small>Title?</small>
           </label>
           <textarea
-            className="form-control br-2 text-white my-2"
+            className="form-control br-2 text-white mb-2"
             style={bgColor}
             rows="1"
             name="title"
@@ -41,10 +36,20 @@ const AddNotes = () => {
             <small>What about the description?</small>
           </label>
           <textarea
-            className="form-control br-2 text-white my-2"
+            className="form-control br-2 text-white mb-2"
             style={bgColor}
             rows="8"
             name="description"
+            onChange={handleChange}
+          ></textarea>
+          <label htmlFor="tag">
+            <small>Any tag?</small>
+          </label>
+          <textarea
+            className="form-control br-2 text-white mb-2"
+            style={bgColor}
+            rows="1"
+            name="tag"
             onChange={handleChange}
           ></textarea>
           <div className="my-2 text-center">
@@ -58,7 +63,6 @@ const AddNotes = () => {
           </div>
         </form>
       </div>
-      <hr />
     </div>
   );
 };

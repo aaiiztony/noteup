@@ -3,8 +3,8 @@ import NoteContext from "../context/notes/NoteContext";
 
 const Noteitem = (props) => {
   const context = useContext(NoteContext);
-  const { deleteNote } = context;
-  const { note } = props;
+  const { deleteNote} = context;
+  const { note, editNote} = props;
   return (
     <div className="container col-md-3">
       <div className="card bg-dark my-2">
@@ -22,7 +22,7 @@ const Noteitem = (props) => {
             padding: "1.2rem 0",
           }}
         >
-          <i className="fa-solid fa-pen-to-square"></i>
+          <i className="fa-solid fa-pen-to-square" type="button" onClick={()=>{editNote(note)}}></i>
           <i className="fa-solid fa-trash" onClick={()=>{deleteNote(note._id)}}></i>
         </div>
       </div>

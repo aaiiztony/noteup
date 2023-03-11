@@ -5,8 +5,12 @@ const NoteState = (props) => {
   const host = "http://localhost:5000";
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
-
-//Fetch the notes from backend
+  const bgColor = {
+    backgroundColor: "#212529",
+    border: "navajowhite",
+    resize: "none",
+  };
+                        //Fetch the notes from backend
   const getNote= async()=>{
     const response = await fetch(`${host}/api/notes/fetchnotes`, {
       method: "GET",
@@ -18,33 +22,50 @@ const NoteState = (props) => {
     const json = await response.json();
     setNotes(json);
   }
-  
-  //add notes
-  //API Call - WORK IN PROGRESS
-  const addNote= async( title, description,tag)=>{
+                        //add notes
+  const addNote= async(title, description, tag)=>{
     const response = await fetch(`${host}/api/notes/addnotes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQwMWM0YWFmYjZjZGVlMTBiZGU0MDkxIn0sImlhdCI6MTY3NzkxMDYyNH0.Tf5aA6TNLuivu2cqkwe-QgZ5KV6kPtT1J6bf_gMdSCc"
       },
-      body: JSON.stringify({title, description, tag}), 
+      body: JSON.stringify({title, description, tag})
     });
-    const json = response.json();
-    setNotes(notes.concat(json.title, json.description))
+    const json = await response.json();
+    setNotes(notes.concat(json));
   }
-  
-  //delete notes
-  const deleteNote=(id)=>{
-    console.log("Deleting note:", id);
-    const afterDelete= notes.filter((note)=>{
-      return note._id!==id;
-    })
+                      //delete notes
+  const deleteNote= async(id)=>{ 
+    //delete the information from the server
+    const response = await fetch(`${host}/api/notes/deletenotes/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQwMWM0YWFmYjZjZGVlMTBiZGU0MDkxIn0sImlhdCI6MTY3NzkxMDYyNH0.Tf5aA6TNLuivu2cqkwe-QgZ5KV6kPtT1J6bf_gMdSCc"
+      },
+    });
+    //frontend logic for delete
+    const afterDelete = notes.filter((note)=>{return note._id!==id})
     setNotes(afterDelete);
-}
+    console.log(response.json());
+  }
+                      //update notes
+  const updateNote = async (id, tag, title, description)=>{
+    const response = await fetch(`${host}/api/notes/updatenotes/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQwMWM0YWFmYjZjZGVlMTBiZGU0MDkxIn0sImlhdCI6MTY3NzkxMDYyNH0.Tf5aA6TNLuivu2cqkwe-QgZ5KV6kPtT1J6bf_gMdSCc"
+      },
+    body: JSON.stringify({title, description, tag})
+  });
+  const json = await response.json();
+  console.log(json)
+  }
 
-  return (
-    <NoteContext.Provider value={{notes, getNote, addNote, deleteNote}}>
+return (
+    <NoteContext.Provider value={{notes, getNote, addNote, deleteNote, updateNote, bgColor}}>
     {props.children}
     </NoteContext.Provider>
     )
