@@ -1,8 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import Noteitem from "./Noteitem";
 
 const Notes = () => {
+  //fetch all existing notes
+  useEffect(() => {
+    getNote();
+  }, // eslint-disable-next-line 
+  [])
+
   //using context to update the notes object
     const context = useContext(NoteContext);
 
@@ -10,30 +16,30 @@ const Notes = () => {
     const {bgColor, updateNote, notes, getNote} = context;
 
     //set the initial value to blanks
-    const [note, setNote] = useState({ etitle: "", edescription: "", etag:""});
+    const [note, setNote] = useState({id: "", etitle: "", edescription: "", etag:""});
 
     //using the name and value as pair to populate our client side note for the UI
     const handleChange = (e) => {
       setNote({ ...note, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = () => {
-      updateNote(note._id); //backend logic
-    };
+    const ref = useRef(null)
 
-    useEffect(() => {
-      getNote();
-    }, // eslint-disable-next-line 
-    [])
-
+    //Fucntion to edit the note in noteitem button
     const editNote= (currentNote)=>{
       //when clicked on edit button, the editModal will be populated with the existing data (title, description, tag)
-      setNote({etitle: currentNote.title, edescription: currentNote.description, etag : currentNote.tag})
+      setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag : currentNote.tag})
     }
+    //update the note on the backend as well as on the UI
+    const handleSubmit = () => {
+      updateNote(note.id, note.etag, note.etitle, note.edescription); //backend logic
+      ref.current.click();  //click on close button
+    }
+
   return (
     <div className="container my-2">
     <div className="text-center">
-          <h3><strong>Your Notes :)</strong></h3>
+          <h3><strong>Your Notes :)</strong></h3><hr />
           <div
             className="modal fade text-dark"
             id="exampleModal"
@@ -85,6 +91,7 @@ const Notes = () => {
                     type="button"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
+                    ref = {ref}
                   >
                     Close
                   </button>
@@ -95,8 +102,7 @@ const Notes = () => {
               </div>
             </div>
           </div>
-      <hr />
-        <div className="row">
+        <div className="row" style={{minHeight:"70vh"}}>
         {notes.map((note)=>{
             return <Noteitem note={note} editNote={editNote} key={note._id}/>
           })}

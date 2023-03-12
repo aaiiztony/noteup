@@ -60,8 +60,15 @@ const NoteState = (props) => {
       },
     body: JSON.stringify({title, description, tag})
   });
-  const json = await response.json();
-  console.log(json)
+  //logic for frontend
+  let newNotes = JSON.parse(JSON.stringify(notes));
+  for (let i=0; i<newNotes.length;i++){
+    newNotes[i].title = title;
+    newNotes[i].description = description;
+    newNotes[i].tag = tag;
+    break
+  }
+  setNotes(newNotes)
   }
 
 return (
