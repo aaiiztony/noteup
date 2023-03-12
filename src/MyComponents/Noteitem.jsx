@@ -22,7 +22,8 @@ const Noteitem = (props) => {
             padding: "1.2rem 0",
           }}
         >
-          <i className="fa-solid fa-pen-to-square" type="button" onClick={()=>{editNote(note)}}></i>
+          <i className="fa-solid fa-pen-to-square" type="button" data-bs-toggle="modal"
+        data-bs-target="#exampleModal" onClick={()=>{editNote(note)}}></i>
           <i className="fa-solid fa-trash" onClick={()=>{deleteNote(note._id)}}></i>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import Noteitem from "./Noteitem";
 
@@ -6,13 +6,13 @@ const Notes = () => {
   //using context to update the notes object
     const context = useContext(NoteContext);
 
-    //destructuring to obtain notes object from useContext
+    //destructuring to obtain note object from useContext
     const {bgColor, updateNote, notes, getNote} = context;
 
-    //set the initial value to whatever was mentioned before
-    const [note, setNote] = useState({ etitle: "", edescription: ""});
+    //set the initial value to blanks
+    const [note, setNote] = useState({ etitle: "", edescription: "", etag:""});
 
-    //using the name and value as pair to populate our client side note
+    //using the name and value as pair to populate our client side note for the UI
     const handleChange = (e) => {
       setNote({ ...note, [e.target.name]: e.target.value });
     };
@@ -26,25 +26,14 @@ const Notes = () => {
     }, // eslint-disable-next-line 
     [])
 
-    const ref = useRef(null);
-
     const editNote= (currentNote)=>{
-      ref.current.click()
-      setNote({etitle: currentNote.title, edescription: currentNote.description})
+      //when clicked on edit button, the editModal will be populated with the existing data (title, description, tag)
+      setNote({etitle: currentNote.title, edescription: currentNote.description, etag : currentNote.tag})
     }
   return (
     <div className="container my-2">
     <div className="text-center">
           <h3><strong>Your Notes :)</strong></h3>
-          <button
-        type="button"
-        className="btn btn-primary d-none"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        ref={ref}
-      >
-        Launch demo modal
-          </button>
           <div
             className="modal fade text-dark"
             id="exampleModal"
