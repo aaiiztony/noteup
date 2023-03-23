@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
+import {useNavigate } from "react-router-dom";
 import NoteContext from "../context/notes/NoteContext";
-
-const Login = () => {
+const Login = (props) => {
+  const {showAlert} = props;
   const context = useContext(NoteContext);
   const {bgColor} = context; 
   const style = {
@@ -14,6 +15,8 @@ const Login = () => {
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+  //useHistory is replaced with useNavigate in v6 of react router dom
+  const navigate = useNavigate();
   const handleFormData = async (e)=>{
     e.preventDefault();
     const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -25,6 +28,15 @@ const Login = () => {
     });
     const json =  await response.json();
     console.log(json)
+    if (json.success){
+      //save the token
+      localStorage.setItem("token" , json.token);
+      navigate("/") // helps navigate to homepage;
+      showAlert("Login Success - hehehe, though don't note your passwords in noteUp","success");
+    }
+    else{
+      showAlert("Login Failed - You're password's wrong man!", "danger")
+    }
   }
   return (
     <div className="container w-50" style={style}>
@@ -66,5 +78,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;

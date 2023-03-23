@@ -19,10 +19,10 @@ const About = () => {
       </p>
       <div className="contact-btn text-center">
       <a href="http://www.linkedin.com/in/aaiztony">
-        <i class="fa-brands fa-linkedin mx-1 text-white fa-xl"></i>
+        <i className="fa-brands fa-linkedin mx-1 text-white fa-xl"></i>
       </a>
       <a href="mailto:aaiiztony@gmail.com">
-      <i class="fa-solid fa-envelope mx-1 text-white fa-xl"></i>
+      <i className="fa-solid fa-envelope mx-1 text-white fa-xl"></i>
       </a>
       </div>
     </div>

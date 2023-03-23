@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 
-const AddNotes = () => {
+const AddNotes = (props) => {
   //to use the state at any component, we use context
   const context = useContext(NoteContext);
   const { addNote, bgColor} = context; //destructuring to get the addNote function
@@ -14,6 +14,7 @@ const AddNotes = () => {
   //using the name and value as pair to populate our client side note
   const handleSubmit = () => {
     addNote(note.title, note.description, note.tag);
+    props.showAlert("Notes added successfully", "primary")
   };
   return (
     <div className="container my-2">

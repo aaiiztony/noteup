@@ -21,6 +21,7 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     setNotes(json);
+    console.log("Note fetching complete")
   }
                         //add notes
   const addNote= async(title, description, tag)=>{
@@ -34,6 +35,7 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     setNotes(notes.concat(json));
+    console.log("New Note Added");
   }
                       //delete notes
   const deleteNote= async(id)=>{ 
@@ -45,11 +47,13 @@ const NoteState = (props) => {
         "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQwMWM0YWFmYjZjZGVlMTBiZGU0MDkxIn0sImlhdCI6MTY3NzkxMDYyNH0.Tf5aA6TNLuivu2cqkwe-QgZ5KV6kPtT1J6bf_gMdSCc"
       },
     });
-    //frontend logic for delete
+    //frontend logic 
     const afterDelete = notes.filter((note)=>{return note._id!==id})
     setNotes(afterDelete);
-    console.log(response.json());
+    const json = await response.json();
+    console.log("Note id", json.notes._id,"deleted successfully");
   }
+
                       //update notes
   const updateNote = async (id, tag, title, description)=>{
     const response = await fetch(`${host}/api/notes/updatenotes/${id}`, {
@@ -60,17 +64,22 @@ const NoteState = (props) => {
       },
     body: JSON.stringify({title, description, tag})
   });
+  const json = await response.json();
+  console.log("Note id", json.notes._id,"updated!");
+  let newNotes = await JSON.parse(JSON.stringify(notes));
   //logic for frontend
-  let newNotes = JSON.parse(JSON.stringify(notes));
   for (let i=0; i<newNotes.length;i++){
+    const element = newNotes[i];
+    if (element._id === id){
     newNotes[i].title = title;
     newNotes[i].description = description;
     newNotes[i].tag = tag;
     break
   }
+  }
   setNotes(newNotes)
   }
-
+ 
 return (
     <NoteContext.Provider value={{notes, getNote, addNote, deleteNote, updateNote, bgColor}}>
     {props.children}
