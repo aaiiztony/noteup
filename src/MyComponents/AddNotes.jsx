@@ -18,7 +18,7 @@ const AddNotes = (props) => {
   };
   return (
     <div className="container my-2">
-      <h3 className="text-center">
+      <h3 className="text-center my-2">
         <strong>Add a note +</strong>
       </h3>
       <div>

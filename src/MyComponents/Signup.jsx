@@ -40,6 +40,7 @@ const Signup = (props) => {
   }
   return (
     <div className="container w-50" style={style}>
+    <h2 className="text-center mt-2">Experience boring notes!</h2>
     <form onSubmit={handleSignUp}>
       <div className="form-group">
         <label htmlFor="exampleInputEmail1">Name</label>

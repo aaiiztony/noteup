@@ -6,6 +6,7 @@ const Home = (props) => {
   const {showAlert} = props;
   return (
     //creating home component for further chnages in the futures
+    //turn the addnote component off if not logged in and think about a different modsal or something to shiowcase or a login modal to login to use the website
     <>
       <AddNotes showAlert={showAlert}/>
     </>
